@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify-Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="utilities.css">
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico.svg">
+</head>
+
+<body>
+
+    <div class="container Flex">
+
+        <div class="left">
+            <div class="closeHamburger invert">
+                <img width="40" src="icons/close.svg">
+            </div>
+            <div class="home bg-black">
+                <div class="logo">
+                    <img src="icons/logo.svg" alt="logo">
+                </div>
+
+                <ul>
+                    <li><img src="icons/home.svg" alt="home">Home</li>
+                    <li><img src="icons/search.svg" alt="home">Search</li>
+                </ul>
+            </div>
+            <div class="library bg-black">
+                <div class="heading">
+                    <img src="icons/library.svg" alt="lib">
+                    <p>Your Library</p>
+                </div>
+                <div class="songList">
+                    <ul>
+
+                    </ul>
+
+                </div>
+
+                <div class="footer Flex">
+                    <div><a href=""><span>Legal</span></a></div>
+                    <div><a href=""><span>Cookies</span></a></div>
+                    <div><a href=""><span>About Ads</span></a></div>
+                    <div><a href=""><span>Accessibility</span></a></div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="right bg-black">
+            <div class="header bg-dark">
+                <div class="nav Flex">
+                    
+                    <img width="60" class="hamburger" src="icons/hamburger.svg">
+                    <img width="40" src="icons/left-arrow.svg">
+                    <img width="40" src="icons/right-arrow.svg">
+                </div>
+                <div class="btn">
+                    <button class="signupBtn">Sign Up</button>
+                    <button class="loginBtn">Log in</button>
+                </div>
+            </div>
+
+            <div class="spotifyPlaylists">
+                <h1>Spotify Playlists</h1>
+                <div class="cardContainer">
+                    
+
+
+
+                </div>
+                <div class="playPannel">
+                    <div class="seekbar">
+                        <div class="circle">
+
+                        </div>
+
+                    </div>
+                    <div class="aboveBar">
+                        <div  class="songInfo">
+
+                        </div>
+
+                        <div class="songBtn invert">
+                            <img id="prevSong" src="icons/prev.svg">
+                            <img id="resumeSong" src="icons/play.svg">
+                            <img id="nextSong" src="icons/next.svg">
+                        </div>
+                        <div class="timeVol" >
+                        <div class="songTime">
+                        </div>
+                        <div class="volume invert Flex">
+                            <img id="volIcon" src="icons/volume.svg"> 
+                            <div class="range">
+                                <input type="range" class="volRange" name="volume" >
+                            </div>
+                        
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+
+</body>
+
+</html>

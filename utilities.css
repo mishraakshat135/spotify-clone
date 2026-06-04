@@ -1,0 +1,25 @@
+.Border{
+    border: 2px solid red;
+}
+
+.Flex{
+    display: flex;
+}
+
+.justify-content{
+    justify-content:center;
+}
+
+.bg-black{
+    background-color: rgb(43, 43, 43);
+    border-radius: 10px;
+    margin:10px;
+}
+
+.bg-dark{
+    background-color:rgb(24, 24, 24);
+}
+
+.invert{
+    filter:invert(1)
+}
