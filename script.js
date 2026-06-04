@@ -18,39 +18,31 @@ function secToMinSec(sec) {
 
 async function getSongs(folder) {
     currFolder = folder;
-    let a = await fetch(`/${folder}/`)
-    let response = await a.text()
-    console.log(response);
-    let div = document.createElement("div")
-    div.innerHTML = response;
-    let as = div.getElementsByTagName("a")
-    songs = [];
-
-    for (let index = 0; index < as.length; index++) {
-        const element = as[index];
-        if (element.href.endsWith("mp3")) {
-            songs.push(element.href.split(`/${folder}/`)[1])
-        }
-
-    }
+    let response = await fetch(`/${folder}/tracks.json`);
+    let data = await response.json()
+    
+    
+    songs = data.songs;
+    
+    
 
 
-    let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0]
+    let songUL = document.querySelector(".songList ul")
     songUL.innerHTML = ""
     for (const song of songs) {
         songUL.innerHTML = songUL.innerHTML + `<li>
                             <img class="musicImg" src="icons/music.svg">
                             <div class="info">
-                                <div>${song.replaceAll("%20", " ")}
+                                <div>${song}
                                 </div>
-                                <div>hehe</div>
+                                <div>Track</div>
                             </div>
                             <img class="playFromLib" src="icons/play.svg">
                         </li>`;
     }
 
-    Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
-        e.addEventListener("click", element => {
+    Array.from(songUL.getElementsByTagName("li")).forEach(e => {
+        e.addEventListener("click", () => {
 
             playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim())
 
@@ -75,37 +67,33 @@ const playMusic = (track, pause = false) => {
 }
 
 async function displayAlbums() {
-    let a = await fetch(`/songs/`);
-    let response = await a.text();
+    let response = await fetch(`/songs/songs.json`);
+    let data = await response.json();
 
-    let div = document.createElement("div");
-    div.innerHTML = response;
-    let anchors = div.getElementsByTagName("a");
+    
  
 
     let cardContainer = document.querySelector(".cardContainer");
-    let array = Array.from(anchors)
-    for (let index = 0; index < array.length; index++) {
-        const e = array[index];
-        if (e.href.includes("/songs") && e.href !=="/songs") {
-           
-            let folder = e.href.split("/").slice(-1)[0];
+    cardContainer.innerHTMl = "";
+    for (const folder of data.albums) {
         
-            let a = await fetch(`/songs/${folder}/info.json`);
-            let response = await a.json();
+        
+        
+            let res = await fetch(`/songs/${folder}/info.json`);
+            let info = await res.json();
             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card">
                         <div>
                         <img  class="play" src="icons/play-btn.png" alt="play">
                         <img class="image" src="/songs/${folder}/cover.jpg" alt="playlist">
-                        <h2>${response.title}</h2>
-                        <p>${response.description}</p>
+                        <h2>${info.title}</h2>
+                        <p>${info.description}</p>
                     </div></div>`
         }
-    }
+    
 
     Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", async item => {
-            songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
+            await getSongs(`songs/${item.currentTarget.dataset.folder}`)
             
             
 
@@ -122,7 +110,7 @@ async function displayAlbums() {
             resumeSong.src = "icons/pause.svg";
         })
     })
- 
+
 }
 
 async function main() {
@@ -175,7 +163,10 @@ async function main() {
     // })
 
     prevSong.addEventListener("click", () => {
-        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0])
+        let currentTrack =decodeURIComponent(
+            currentSong.src.split("/").pop()
+        )
+        let index = songs.indexOf(currentTrack);
 
         if (currentSong.currentTime > 3)
             currentSong.currentTime = 0;
@@ -192,8 +183,10 @@ async function main() {
     })
 
     nextSong.addEventListener("click", () => {
-        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0])
-
+        let currentTrack =decodeURIComponent(
+            currentSong.src.split("/").pop()
+        )
+        let index = songs.indexOf(currentTrack);
         if ((index + 1) < songs.length) {
             playMusic(songs[index + 1])
             resumeSong.src = "icons/pause.svg"
